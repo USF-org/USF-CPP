@@ -1,2 +1,2 @@
-# USF-C
+# USF-CPP
 USF in C++

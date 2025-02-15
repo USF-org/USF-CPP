@@ -1,0 +1,38 @@
+name: CPP-CI
+
+on:
+  push:
+    branches:
+      - main   # 在 main 分支上触发 CI
+  pull_request:
+    branches:
+      - main   # 在 pull request 到 main 时触发 CI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout 代码
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # 设置 CMake 和构建环境
+    - name: Set up CMake
+      uses: alexa/ubuntu-cmake@v2
+      with:
+        cmake-version: '3.20.2'
+
+    # 创建构建目录并构建项目
+    - name: Build with CMake
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build .
+
+    # 运行测试
+    - name: Run tests
+      run: |
+        cd build
+        ctest
